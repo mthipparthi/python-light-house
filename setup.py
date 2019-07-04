@@ -13,7 +13,7 @@ from pathlib import Path
 from setuptools import find_packages, setup, Command
 
 # Package meta-data.
-NAME = "mypackage"
+NAME = "reference"
 DESCRIPTION = "My short description for my project."
 URL = "https://github.com/me/myproject"
 EMAIL = "mahesh.thipparthi@gmail.com"
@@ -105,7 +105,7 @@ setup(
     url=URL,
     packages=find_packages(exclude=("tests",)),
     # If your package is a single module, use this instead of 'packages':
-    # py_modules=['mypackage'],
+    # py_modules=['reference'],
     # entry_points={
     #     'console_scripts': ['mycli=mymodule:cli'],
     # },

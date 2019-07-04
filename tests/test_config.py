@@ -1,5 +1,5 @@
-from context import mypackage
+from context import reference
 
 
 def test_config():
-    assert mypackage.config.config_1 == "config_val_2"
+    assert reference.config.config_1 == "config_val_2"

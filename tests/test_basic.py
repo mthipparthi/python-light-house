@@ -1,6 +1,6 @@
-from context import mypackage
+from context import reference
 
 
 def test_add():
-    assert mypackage.my_add(10, 20) == 30
+    assert reference.my_add(10, 20) == 30
 
