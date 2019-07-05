@@ -1,4 +1,3 @@
-
 import collections
 
 
@@ -10,7 +9,7 @@ def notes():
     pass
 
 
-def main():
+def basic_example():
     a = {"a": "A", "c": "C"}
     b = {"b": "B", "c": "D"}
     m = collections.ChainMap(a, b)
@@ -32,14 +31,13 @@ def main():
     print('"d" in m: {}'.format(("d" in m)))
 
 
-def test():
+def order_matters():
     a = {"a": "A", "c": "C"}
     b = {"b": "B", "c": "D"}
     m = collections.ChainMap(b, a)
     print("a = {}".format(m["a"]))
     print("b = {}".format(m["b"]))
     print("c = {}".format(m["c"]))
-
 
 
 def dict_update():
