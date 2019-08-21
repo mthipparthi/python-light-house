@@ -48,7 +48,7 @@ OK
 OK
 127.0.0.1:6379> getrange users:leto 31 48
 "\"likes\": [\"spice\"]"
-127.0.0.1:6379> getrange users:leto 31 48 
+127.0.0.1:6379> getrange users:leto 31 48
 root@default:/data# ^C
 root@default:/data# ^C
 root@default:/data# set users:leto '{"name": leto, "planet": dune, "likes": ["spice"]}'
@@ -106,7 +106,7 @@ OK
 127.0.0.1:6379> lpush newusers goku
 (integer) 1
 127.0.0.1:6379> lget newusers
-(error) ERR unknown command `lget`, with args beginning with: `newusers`, 
+(error) ERR unknown command `lget`, with args beginning with: `newusers`,
 127.0.0.1:6379> get newusers
 (error) WRONGTYPE Operation against a key holding the wrong kind of value
 127.0.0.1:6379> llen newusers
@@ -252,10 +252,10 @@ OK
 (integer) 0
 127.0.0.1:6379> ttl pages:about
 (integer) -2
-127.0.0.1:6379> 
+127.0.0.1:6379>
 127.0.0.1:6379> persist pages:about
 (integer) 0
-127.0.0.1:6379> expire pages:about 30setex pages:about 30 '<h1>about us</h1>....' 
+127.0.0.1:6379> expire pages:about 30setex pages:about 30 '<h1>about us</h1>....'
 root@default:/data# setex pages:about 30 '<h1>about us</h1>....'
 bash: setex: command not found
 root@default:/data# redis-cli
@@ -422,9 +422,9 @@ root@default:/data# redis-cli
 1) "20181214"
 127.0.0.1:6379> MEMORY USAGE 20181214
 (integer) 28548637
-127.0.0.1:6379> 
+127.0.0.1:6379>
 ```
-
 
 https://www.openmymind.net/redis.pdf
 https://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps/
+https://blog.usejournal.com/first-step-to-redis-cluster-7712e1c31847
