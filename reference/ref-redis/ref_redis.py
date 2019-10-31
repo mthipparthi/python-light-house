@@ -21,8 +21,8 @@ def pl():
 
 def zrange_main():
     r = redis.Redis(host="192.168.99.100", port=6379, db=0)
-    r.set("foo", "bar")
-    i = '2GB:20181214:014227:{"location:"https://console.cloud.google.com/storage/browser/_details/isentia-streams-prod/2gb/segment_20181214_014227_21335.ts"}'
+    # r.set("foo", "bar")
+    # i = '2GB:20181214:014227:{"location:"https://console.cloud.google.com/storage/browser/_details/isentia-streams-prod/2gb/segment_20181214_014227_21335.ts"}'
 
     # r.zadd("anotherindex1", {i: 0})
 
@@ -146,8 +146,126 @@ def test_re():
     record_event(conn, event)
 
 
+def update(r):
+    itemid = "NEXTUP:2GB11"
+    index = "MY2GBINDEX11"
+
+    with r.pipeline() as pipe:
+        pipe.watch(index)
+        val = pipe.get(itemid)
+        print(f"Before {val}")
+        pipe.incrby(itemid, 1)
+        val = pipe.get(itemid)
+        print(f"Afterr {val}")
+        val = val.decode("utf-8")
+        index_str = f"2GB:segment_20191016_0000{val}.ts:{val}"
+
+        pipe.zadd(index, index_str, 0)
+        print(index_str)
+
+        op = pipe.zrangebylex(index, "[2GB:segment_20191016_000000", "[2GB:segment_20191016_000030")
+
+        print(op)
+        # member = member + ":" + str(incr)
+
+        pipe.unwatch()
+
+
+import threading
+
+read_lock = threading.RLock()
+
+
+import random
+
+
+def update_redis_index(ts_file_name):
+    try:
+
+        channel_index = "channel:index:gs:{}".format("4BC")
+        channel_nextup_index = "channel:nextup:gs:{}".format("4BC")
+
+        read_lock.acquire()
+
+        r = redis.Redis(host="127.0.0.1", port=6379, db=0, socket_timeout=5, retry_on_timeout=True)
+
+        with r.pipeline() as pipe:
+
+            pipe.watch(channel_nextup_index)
+            pipe.incrby(channel_nextup_index, 1)
+
+            nextup_val = pipe.get(channel_nextup_index)
+            nextup_val = nextup_val.decode("utf-8")
+
+            absolute_url = "https://storage.googleapis.com/{}/{}/{}".format(
+                "target_bucket", "2GB", ts_file_name
+            )
+
+            index_str = "{};{};{};{}".format(ts_file_name, nextup_val, "2gb", absolute_url)
+
+            # pipe.zadd(channel_index, 0, index_str)
+            # pipe.zadd(channel_index, index_str=0)
+            print("****" * 10)
+            print(index_str)
+            print("####" * 10)
+
+            mapping = {index_str: 0}
+
+            # pl = {}
+            # pl[index_str] = 0
+
+            key = "maheshhhhh{}".format(random.randint(1, 10))
+
+            pipe.zadd(channel_index, {index_str: 0})
+
+            pipe.zadd("z", {"z1": 1})
+
+            # pipe.zadd(channel_index, {index_str: 0})
+
+            print("Updated Redis Index with  {} for channel".format(index_str))
+
+            # result = pipe.zrangebylex(
+            #     channel_index, "[segment_20191016_100002000", "[segment_20191016_100003000"
+            # )
+
+            op = pipe.zrangebylex(
+                channel_index, "[segment_20191030_000010", "[segment_20191030_000020"
+            )
+
+            # op = pipe.zrangebylex(channel_index, "[maheshhhhh0", "[maheshhhhh10")
+
+            print("OUTPUT *** ")
+
+            print(op)
+
+            # op = pipe.zremrangebylex(
+            #     channel_index, "[segment_20191030_000010", "[segment_20191030_000020"
+            # )
+
+            # print(op)
+
+            pipe.unwatch()
+
+        read_lock.release()
+
+    except Exception as ex:
+        print("Failed to Update Redis for channel {} - {}".format("2GB", ex))
+
+
+import threading
+
 if __name__ == "__main__":
-    peak_alert_index()
+    # r = redis.Redis(host="127.0.0.1", port=6379, db=0)
+    threads = []
+    for i in range(5):
+        # threading.Thread(update)
+        index_str = f"segment_20191030_00001{i}.ts"
+        t = threading.Thread(target=update_redis_index, args=(index_str,))
+        threads.append(t)
+        t.start()
+
+    for t in threads:
+        t.join()
 
 
 # Redis Notes
