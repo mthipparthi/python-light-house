@@ -15,5 +15,5 @@ def main():
         print(f"Found it")
 
 
-if __name__ == "__main__":
+if __name__ == "__main__:"
     main()

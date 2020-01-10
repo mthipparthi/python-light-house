@@ -1,4 +1,4 @@
-PYTHON_VERSION := python3.7
+PYTHON_VERSION := python3.8
 VIRTUALENV_DIR := venv
 
 

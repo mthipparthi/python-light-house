@@ -47,5 +47,24 @@ def dict_update():
     print(a)
 
 
+from collections import Counter
+
+
+def anagram(a, b):
+    c = Counter(a)
+    d = Counter(b)
+    if len(c) > len(d):
+        e = c - d
+    else:
+        e = d - c
+
+    if not e:
+        return True
+    else:
+        return False
+
+
 if __name__ == "__main__":
-    dict_update()
+    # dict_update()
+    print(anagram("abc", "cbad"))
+    print(anagram("abc", "bac"))

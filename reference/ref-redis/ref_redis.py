@@ -182,8 +182,8 @@ import random
 def update_redis_index(ts_file_name):
     try:
 
-        channel_index = "channel:index:gs:{}".format("4BC")
-        channel_nextup_index = "channel:nextup:gs:{}".format("4BC")
+        channel_index = "channel:index:s3:{}".format("3BC")
+        channel_nextup_index = "channel:nextup:gs:{}".format("3BC")
 
         read_lock.acquire()
 
@@ -259,7 +259,7 @@ if __name__ == "__main__":
     threads = []
     for i in range(5):
         # threading.Thread(update)
-        index_str = f"segment_20191030_00001{i}.ts"
+        index_str = f"segment_20191106_00001{i}.ts"
         t = threading.Thread(target=update_redis_index, args=(index_str,))
         threads.append(t)
         t.start()
