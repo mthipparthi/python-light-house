@@ -7,5 +7,5 @@ My Python Project template
 Unix commands to rename packge
 
 ```
-rm -rf .git ; sed -i ".temp" 's/mypackage/distributor/g' **/*.py; find . -name "*.temp" -delete
+rm -rf .git ; sed -i ".temp" 's/mypackage/distributor/g' **/*.[py,yaml,yml]; find . -name "*.temp" -delete
 ```
