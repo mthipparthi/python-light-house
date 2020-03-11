@@ -1,15 +1,8 @@
-from gevent.queue import Queue
-from gevent.lock import Semaphore
 import gevent
 
 from gevent import Greenlet
-import gevent
-
-import threading
-
-
-print(__name__)
-
+from gevent.queue import Queue
+from gevent.lock import Semaphore
 
 # https://gist.github.com/ls0f/2bf398b70e359f3ecf36
 
