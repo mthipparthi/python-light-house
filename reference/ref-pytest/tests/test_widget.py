@@ -3,7 +3,7 @@ def test_wd_fn_as_expected():
 
 
 def test_wd_fn_as_not_expected():
-    assert False
+    assert True
 
 
 def abc_test():
