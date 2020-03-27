@@ -86,7 +86,7 @@ def trigger_group_stats_bg_tasks():
     # create_task_queue()
     # BackGroundLoopTask().start()
     with app.app_context():
-        result = [BackGroundLoopTask(num=i).start() for i in range(10)]
+        result = [BackGroundLoopTaskD(num=i).start() for i in range(3)]
 
 
 from views import *
