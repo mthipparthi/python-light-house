@@ -6,12 +6,10 @@ import gevent
 from gevent import Greenlet
 import gevent
 
-# from views import BackGroundLoopTask
-
 
 monkey.patch_all()
 
-from queues import *
+# from queues import *
 
 from flask import g
 
@@ -70,26 +68,41 @@ from flask import g
 #             print(f"I am working on task {task}")
 #             gevent.sleep(0.1)
 
+from task_queues import TaskManager, StatsTaskQueue
 
-# @app.route("/task/<id>", methods=["GET",])
-# def task_cb(id):
-#     # gevent.spawn(hello_cb2)
-#     tasks.put(int(id))
-#     return f"Task Id {id}"
+
+@app.route("/task/<task_id>", methods=["GET",])
+def add_tasksss(task_id):
+    _task_manager = TaskManager()
+    _task_manager.add_task("WORKER_TYPE_GROUP_STATS", [task_id])
+    return f"Task Id {task_id}"
+
+
+@app.route("/hello", methods=["GET",])
+def hello_world():
+    queue = StatsTaskQueue()
+    # breakpoint()
+    print(f"GET>>>>>Q Size ... {queue._queue}")
+    return f"GET>>>>> size {queue.qsize()}"
+
+
+from task_queues import start_tasks
 
 
 @app.before_first_request
 def trigger_group_stats_bg_tasks():
     print("This function will run once")
+
+    start_tasks()
     # from queues import BackGroundLoopTask
 
     # create_task_queue()
     # BackGroundLoopTask().start()
-    with app.app_context():
-        result = [BackGroundLoopTaskD(num=i).start() for i in range(3)]
+    # with app.app_context():
+    #     result = [BackGroundLoopTaskD(num=i).start() for i in range(3)]
 
 
-from views import *
+# from views import *
 from gevent.pywsgi import WSGIServer
 
 WSGIServer(("127.0.0.1", 8888), app).serve_forever()
