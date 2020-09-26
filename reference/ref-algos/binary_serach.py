@@ -32,7 +32,6 @@ def binary_search(numbers, num):
             low = mid + 1
         elif num < numbers[mid]:
             high = mid - 1
-    breakpoint()
 
     return False
 
