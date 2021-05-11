@@ -1,5 +1,5 @@
-PYTHON_VERSION := python3.8
-VIRTUALENV_DIR := venv
+PYTHON_VERSION := python3.9
+VIRTUALENV_DIR := .venv
 
 
 
